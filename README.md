@@ -24,3 +24,7 @@ This is my Automatic Whiteboard Eraser project that I call it **AutoErase** and 
 - ~~Measure distance on right side~~
 - Power Arduino with solar panel
 - Make both motors rotate (9v battery isn't enough apparently)
+
+## Additional Options
+- Add remote control feature
+- add OLED display for aesthetic
