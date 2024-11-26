@@ -1,3 +1,4 @@
+//button pin
 const int btnPin=2;
 
 //left sensor
