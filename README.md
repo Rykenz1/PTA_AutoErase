@@ -28,3 +28,6 @@ This is my Automatic Whiteboard Eraser project that I call it **AutoErase** and 
 ## Additional Options
 - Add remote control feature
 - add OLED display for aesthetic
+
+## Known Issues
+- Arduino cant powered by solar yet
