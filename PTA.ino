@@ -9,14 +9,22 @@ const int echoL=5;
 const int trigR=6;
 const int echoR=7;
 
+//motor direction
 const int mtrFWD=8;
 const int mtrRVS=9;
+
+//pwm pin
+const int EnPin=10
+
+//led pin
+const int LedL=A1;
+const int LedR=A2;
 
 bool start=false;
 bool reverse;
 
 long durationL,durationR;
-int distanceL,distanceR;
+int distanceL,distanceR,speed=100;
 
 void setup() {
   // put your setup code here, to run once:
@@ -27,6 +35,9 @@ void setup() {
   pinMode(trigR, OUTPUT);
   pinMode(mtrFWD, OUTPUT);
   pinMode(mtrRVS, OUTPUT);
+  pinMode(EnPin, OUTPUT);
+  pinMode(LedL, OUTPUT);
+  pinMode(LedR, OUTPUT);
   
   //INPUT PIN
   pinMode(btnPin, INPUT_PULLUP);
@@ -41,8 +52,10 @@ void setup() {
 
 void loop() {
 
-  int btn=digitalRead(btnPin);
+  analogWrite(EnPin, speed);
 
+  int btn=digitalRead(btnPin);
+  
   //button press start the process
   if(btn==LOW){
     digitalWrite(LED_BUILTIN, HIGH);
@@ -55,6 +68,8 @@ void loop() {
     if(reverse==false){
       MoveLeft();
       DistanceMeasureL();
+      digitalWrite(LedL, HIGH);
+      digitalWrite(LedR, LOW);
       
       if(distanceL<=5){
         reverse=true;
@@ -63,6 +78,9 @@ void loop() {
     }else{
       MoveRight();
       DistanceMeasureR();
+      digitalWrite(LedL, LOW);
+      digitalWrite(LedR, HIGH);
+
 
       if(distanceR<=5){
         Stop();
@@ -121,6 +139,8 @@ void MoveRight(){
 void Stop(){
   digitalWrite(mtrFWD, LOW);
   digitalWrite(mtrRVS, LOW);
+  digitalWrite(LedL, LOW);
+  digitalWrite(LedR, LOW);
   start=false;
   reverse=false;
 }
