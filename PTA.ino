@@ -1,5 +1,5 @@
 //button pin
-const int btnPin=2;
+const int btnPin=A0;
 
 //left sensor
 const int trigL=4;
@@ -13,11 +13,20 @@ const int echoR=7;
 const int mtrFWD=8;
 const int mtrRVS=9;
 
+//pwm pin
+const int EnAPin=10;
+const int EnBPin=11;
+
+//led pin
+const int LedL=A1;
+const int LedR=A2;
+
 bool start=false;
 bool reverse;
 
 long durationL,durationR;
-int distanceL,distanceR;
+int distanceL,distanceR,speed=150,StopDelay=1000;
+int Seconds=1;
 
 void setup() {
   // put your setup code here, to run once:
@@ -28,6 +37,10 @@ void setup() {
   pinMode(trigR, OUTPUT);
   pinMode(mtrFWD, OUTPUT);
   pinMode(mtrRVS, OUTPUT);
+  pinMode(EnAPin, OUTPUT);
+  pinMode(EnBPin, OUTPUT);
+  pinMode(LedL, OUTPUT);
+  pinMode(LedR, OUTPUT);
   
   //INPUT PIN
   pinMode(btnPin, INPUT_PULLUP);
@@ -42,6 +55,9 @@ void setup() {
 }
 
 void loop() {
+
+  analogWrite(EnAPin, speed);
+  analogWrite(EnBPin, speed);
 
   int btn=digitalRead(btnPin);
   
@@ -132,6 +148,7 @@ void MoveRight(){
 void Stop(){
   digitalWrite(mtrFWD, LOW);
   digitalWrite(mtrRVS, LOW);
-  start=false;
-  reverse=false;
+  digitalWrite(LedL, LOW);
+  digitalWrite(LedR, LOW);
+  
 }
