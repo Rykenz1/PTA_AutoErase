@@ -17,16 +17,13 @@ const int mtrRVS=9;
 const int EnAPin=10;
 const int EnBPin=11;
 
-//led pin
-const int LedL=A1;
-const int LedR=A2;
-
 bool start=false;
 bool reverse;
 
 long durationL,durationR;
 int distanceL,distanceR,speed=150,StopDelay=1000;
 int Seconds=1;
+int repeat=2;
 
 void setup() {
   // put your setup code here, to run once:
@@ -39,8 +36,6 @@ void setup() {
   pinMode(mtrRVS, OUTPUT);
   pinMode(EnAPin, OUTPUT);
   pinMode(EnBPin, OUTPUT);
-  pinMode(LedL, OUTPUT);
-  pinMode(LedR, OUTPUT);
   
   //INPUT PIN
   pinMode(btnPin, INPUT_PULLUP);
@@ -56,8 +51,40 @@ void setup() {
 
 void loop() {
 
-  analogWrite(EnAPin, speed);
-  analogWrite(EnBPin, speed);
+  // analogWrite(EnAPin, speed);
+  // analogWrite(EnBPin, speed);
+
+  ButtonPress();
+
+  if(start==true){
+    if(reverse==false){
+      MoveLeft();
+      DistanceMeasureL();
+      
+      if(distanceL<=5){
+        reverse=true;
+        Stop();
+        delay(Seconds);
+      }
+
+    }else{
+      MoveRight();
+      DistanceMeasureR();
+
+      if(distanceR<=5){
+        Stop();
+        start=false;
+        reverse=false;
+      }
+    }
+  }
+  
+  
+  // Serial.print(start);
+  // Serial.println(reverse);
+}
+
+void ButtonPress(){
 
   int btn=digitalRead(btnPin);
   
@@ -69,37 +96,6 @@ void loop() {
     digitalWrite(LED_BUILTIN, LOW);
   }
 
-  if(start==true){
-    if(reverse==false){
-      MoveLeft();
-      DistanceMeasureL();
-      digitalWrite(LedL, HIGH);
-      digitalWrite(LedR, LOW);
-      
-      if(distanceL<=5){
-        reverse=true;
-        Stop();
-        delay(Seconds);
-      }
-
-    }else{
-      MoveRight();
-      DistanceMeasureR();
-      digitalWrite(LedL, LOW);
-      digitalWrite(LedR, HIGH);
-
-
-      if(distanceR<=5){
-        Stop();
-        start=false;
-        reverse=false;
-      }
-    }
-  }
-  
-  
-  Serial.print(start);
-  Serial.println(reverse);
 }
 
 void DistanceMeasureL() {
@@ -148,7 +144,5 @@ void MoveRight(){
 void Stop(){
   digitalWrite(mtrFWD, LOW);
   digitalWrite(mtrRVS, LOW);
-  digitalWrite(LedL, LOW);
-  digitalWrite(LedR, LOW);
   
 }
