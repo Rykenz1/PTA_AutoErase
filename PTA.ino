@@ -17,18 +17,20 @@ const int mtrRVS=9;
 const int EnAPin=10;
 const int EnBPin=11;
 
+//----------------IMPORTANT VARIABLES----------------
 bool start=false;
 bool reverse;
+int repeat=2;
+int distanceL,distanceR;
+//---------------------------------------------------
 
 long durationL,durationR;
-int distanceL,distanceR,speed=150,StopDelay=1000;
 int Seconds=1;
-int repeat=2;
+int speed=150,StopDelay=1000;
 
 void setup() {
-  // put your setup code here, to run once:
   
-  //OUTPUT PIN
+  //----------OUTPUT PIN----------
   pinMode(LED_BUILTIN,OUTPUT);
   pinMode(trigL, OUTPUT);
   pinMode(trigR, OUTPUT);
@@ -37,7 +39,7 @@ void setup() {
   pinMode(EnAPin, OUTPUT);
   pinMode(EnBPin, OUTPUT);
   
-  //INPUT PIN
+  //----------INPUT PIN----------
   pinMode(btnPin, INPUT_PULLUP);
   pinMode(echoL, INPUT);
   pinMode(echoR, INPUT);
@@ -46,42 +48,57 @@ void setup() {
   Serial.begin(9600);
 
   reverse=false;
+
+  //seconds x 1000
   Seconds=Seconds * StopDelay;
 }
 
 void loop() {
 
-  // analogWrite(EnAPin, speed);
-  // analogWrite(EnBPin, speed);
-
+  //press button to start
   ButtonPress();
 
+  //start process
   if(start==true){
+
+    //move left
     if(reverse==false){
       MoveLeft();
       DistanceMeasureL();
       
+      //stop and set reverse to true
       if(distanceL<=5){
         reverse=true;
         Stop();
         delay(Seconds);
       }
 
+    //move right
     }else{
       MoveRight();
       DistanceMeasureR();
 
-      if(distanceR<=5){
+      if(distanceR<=8){
         Stop();
-        start=false;
+        repeat--;
         reverse=false;
+        delay(Seconds);
       }
     }
   }
+
+  //stop and reset condition
+  if(repeat==0){
+    Stop();
+    start=false;
+    reverse=false;
+    repeat=2;
+  }
   
   
-  // Serial.print(start);
-  // Serial.println(reverse);
+  Serial.print(start);
+  Serial.print(reverse);
+  Serial.println(repeat);
 }
 
 void ButtonPress(){
@@ -128,17 +145,17 @@ void DistanceMeasureR() {
   delay(50);
 }
 
+//Rotate motor to move left
 void MoveLeft(){
   digitalWrite(mtrFWD, HIGH);
   digitalWrite(mtrRVS, LOW);
 }
 
-
+//Rotate motor to move right
 void MoveRight(){
   digitalWrite(mtrFWD, LOW);
   digitalWrite(mtrRVS, HIGH);
 }
-
 
 //stop everything
 void Stop(){
