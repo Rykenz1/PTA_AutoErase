@@ -20,7 +20,7 @@ const int EnBPin=11;
 //----------------IMPORTANT VARIABLES----------------
 bool start=false;
 bool reverse;
-int repeat=4;
+int repeat=4
 int distanceL,distanceR;
 //---------------------------------------------------
 
@@ -92,7 +92,7 @@ void loop() {
     Stop();
     start=false;
     reverse=false;
-    repeat=2;
+    repeat=4;
   }
   
   Serial.print(start);
