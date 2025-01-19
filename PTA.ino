@@ -1,5 +1,3 @@
-//hello
-
 //button pin
 const int btnPin=A0;
 
@@ -22,7 +20,7 @@ const int EnBPin=11;
 //----------------IMPORTANT VARIABLES----------------
 bool start=false;
 bool reverse;
-int repeat=2;
+int repeat=4;
 int distanceL,distanceR;
 //---------------------------------------------------
 
@@ -69,7 +67,7 @@ void loop() {
       DistanceMeasureL();
       
       //stop and set reverse to true
-      if(distanceL<=5){
+      if(distanceL<=6){
         reverse=true;
         Stop();
         delay(Seconds);
@@ -80,7 +78,7 @@ void loop() {
       MoveRight();
       DistanceMeasureR();
 
-      if(distanceR<=8){
+      if(distanceR<=6){
         Stop();
         repeat--;
         reverse=false;
@@ -96,7 +94,6 @@ void loop() {
     reverse=false;
     repeat=2;
   }
-  
   
   Serial.print(start);
   Serial.print(reverse);
@@ -114,7 +111,6 @@ void ButtonPress(){
   }else{
     digitalWrite(LED_BUILTIN, LOW);
   }
-
 }
 
 void DistanceMeasureL() {
