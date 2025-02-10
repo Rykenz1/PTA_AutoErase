@@ -1,6 +1,3 @@
-//button pin
-const int btnPin=A0;
-
 //left sensor
 const int trigL=4;
 const int echoL=5;
@@ -13,20 +10,18 @@ const int echoR=7;
 const int mtrFWD=8;
 const int mtrRVS=9;
 
-//pwm pin
-const int EnAPin=10;
-const int EnBPin=11;
+//button pin
+const int btnPin=12;
 
 //----------------IMPORTANT VARIABLES----------------
 bool start=false;
 bool reverse;
-int repeat=4
+int repeat=6;
 int distanceL,distanceR;
 //---------------------------------------------------
 
 long durationL,durationR;
-int Seconds=1;
-int speed=150,StopDelay=1000;
+int speed=150,StopDelay=750;
 
 void setup() {
   
@@ -36,8 +31,6 @@ void setup() {
   pinMode(trigR, OUTPUT);
   pinMode(mtrFWD, OUTPUT);
   pinMode(mtrRVS, OUTPUT);
-  pinMode(EnAPin, OUTPUT);
-  pinMode(EnBPin, OUTPUT);
   
   //----------INPUT PIN----------
   pinMode(btnPin, INPUT_PULLUP);
@@ -49,8 +42,6 @@ void setup() {
 
   reverse=false;
 
-  //seconds x 1000
-  Seconds=Seconds * StopDelay;
 }
 
 void loop() {
@@ -70,7 +61,7 @@ void loop() {
       if(distanceL<=6){
         reverse=true;
         Stop();
-        delay(Seconds);
+        delay(StopDelay);
       }
 
     //move right
@@ -82,7 +73,7 @@ void loop() {
         Stop();
         repeat--;
         reverse=false;
-        delay(Seconds);
+        delay(StopDelay);
       }
     }
   }
@@ -92,7 +83,7 @@ void loop() {
     Stop();
     start=false;
     reverse=false;
-    repeat=4;
+    repeat=6;
   }
   
   Serial.print(start);
@@ -124,7 +115,7 @@ void DistanceMeasureL() {
   durationL= pulseIn(echoL, HIGH);
   distanceL= durationL/29/2;
 
-  // Serial.println("Distance: " + String(distanceL)+"cm");
+  Serial.println("Distance: " + String(distanceL)+"cm");
   delay(50);
 }
 
@@ -139,7 +130,7 @@ void DistanceMeasureR() {
   durationR= pulseIn(echoR, HIGH);
   distanceR= durationR/29/2;
 
-  // Serial.println("Distance: " + String(distanceR)+"cm");
+  Serial.println("Distance: " + String(distanceR)+"cm");
   delay(50);
 }
 
@@ -158,6 +149,5 @@ void MoveRight(){
 //stop everything
 void Stop(){
   digitalWrite(mtrFWD, LOW);
-  digitalWrite(mtrRVS, LOW);
-  
+  digitalWrite(mtrRVS, LOW); 
 }
