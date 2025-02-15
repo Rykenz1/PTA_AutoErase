@@ -4,7 +4,7 @@
 This is my Automatic Whiteboard Eraser project which I call **AutoErase** and powered by Arduino. This is a final-year project for my college 
 
 ## Circuit Design
-![circuit_image_v5](https://github.com/user-attachments/assets/5447d834-dc0e-4537-892d-6dd6cd150966)
+![circuit_image_v6](https://github.com/user-attachments/assets/ab516db4-212d-4a91-a202-1a016e8e20e4)
 (made in [Cirkit Designer](https://app.cirkitdesigner.com/))
 
 
@@ -12,11 +12,11 @@ This is my Automatic Whiteboard Eraser project which I call **AutoErase** and po
 - Arduino Uno x1
 - Breadboard x1
 - Mini breadboard x1
-- Hobby DC motor x2
+- Hobby DC motor x4
 - Jumper wires
 - L298N Motor Driver x1
 - Ultrasonic Sensor x2
-- Pushbutton x1
+- Rocker Switch x1
 - i8650 Li-Ion Batteries x2
 
 ## To-Do list
@@ -32,4 +32,4 @@ This is my Automatic Whiteboard Eraser project which I call **AutoErase** and po
 
 ## Known Issues
 - Arduino can't powered by solar yet
-- The center of whiteboard is hard to erase because of the gap between erasers
+- ~~The center of whiteboard is hard to erase because of the gap between erasers~~
